@@ -1,9 +1,6 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+name: Node CI
 
-name: Run Javascript Tests
-
-on: [push]
+on: [push,pull_request]
 
 jobs:
   build:
@@ -12,17 +9,18 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [10.x]
 
     steps:
     - uses: actions/checkout@v1
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js $
       uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: $
     - name: npm install, build, and test
       run: |
-        npm i
+        npm ci
+        npm run build --if-present
         npm test
       env:
         CI: true
