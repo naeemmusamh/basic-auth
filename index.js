@@ -6,8 +6,8 @@ require('dotenv').config();
 //mongoose
 const mongoose = require('mongoose');
 //express
-const express = require('express');
-const app = express();
+// const express = require('express');
+// const app = express();
 //require the server file
 const server = require('./src/server.js');
 //base the .env file
@@ -21,7 +21,6 @@ mongoose.connect(MONGODB_URL, {
     useUnifiedTopology: true,
     useFindAndModify: false,
     useCreateIndex: true,
-}).then(() => {
-    app.listen(PORT, () => console.log('server up'));
-}).catch(error =>
+}).then( server.start(PORT)
+).catch(error =>
     console.error('Could not start server', error.message));

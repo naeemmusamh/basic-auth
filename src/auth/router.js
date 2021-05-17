@@ -21,27 +21,23 @@ const router = express.Router();
 // http post :3000/signup usernmae=john password=foo
 router.post('/signup', async(request, response) => {
     try {
+
         req.body.password = await bcrypt.hash(req.body.password, 10);
         const user = new Users(req.body);
         const record = await user.save(req.body);
         res.status(200).json(record);
-    } catch (e) { res.status(403).send("Error Creating User"); }
+    } 
+    catch (e) { res.status(403).send("Error Creating User"); 
+    }
 });
 
 //router for the sign in page
 // Signin Route -- login with username and password
 // test with httpie
 // http post :3000/signin -a john:foo
-router.post('/signin', async(request, response) => {
-    try {
-        const user = await Users.findOne({ username: username })
-        const valid = await bcrypt.compare(password, user.password);
-        if (valid) {
-            res.status(200).json(user);
-        } else {
-            throw new Error('Invalid User')
-        }
-    } catch (error) { res.status(403).send("Invalid Login"); }
+router.post('/signin',basicUser, (request, response) => {
+    let data = req.userdata;
+    res.status(200).json({ user: data });
 });
 
 module.exports = router;
