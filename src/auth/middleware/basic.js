@@ -5,27 +5,28 @@
 //initialization and setup the app and package
 //base-64
 const base64 = require('base-64');
+//bcrypt
+const bcrypt = require('bcrypt');
+//middleware for schema database
+const Users = require('../models/users-model.js');
 
-module.exports = (request, response, next) => {
-    /*
-    req.headers.authorization is : "Basic sdkjdsljd="
-    To get username and password from this, take the following steps:
-      - Turn that string into an array by splitting on ' '
-      - Pop off the last value
-      - Decode that encoded string so it returns to user:pass
-      - Split on ':' to turn it into an array
-      - Pull username and password from that array
-  */
+module.exports = async (request, response, next) => {
 
     let basicHeaderParts = req.headers.authorization.split(' '); // ['Basic', 'sdkjdsljd=']
     let encodedString = basicHeaderParts.pop(); // sdkjdsljd=
     let decodedString = base64.decode(encodedString); // "username:password"
     let [username, password] = decodedString.split(':'); // username, password
 
-    if (username && password) {
-        request.user = { username, password };
-        next();
-    } else {
-        next('invalid sign in');
+    try {
+
+        const user = await Users.findOne({ username: username })
+        const valid = await bcrypt.compare(password, user.password);
+        if (valid) {
+            res.status(200).json(user);
+        } else {
+            throw new Error('Invalid User')
+        }
+    } catch (error) { res.status(403).send("Invalid Login"); 
+
     }
 };

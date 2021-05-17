@@ -5,7 +5,7 @@
 module.exports = (error, request, response, next) => {
     response.status(500).json({
         error: error,
-        message: 'there is something wrong in the path',
+        message: `there is something wrong in the path ${error.message}`,
         path: request.path
     });
 };

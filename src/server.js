@@ -40,3 +40,13 @@ app.get('/wrong-path', (request, response) => {
 app.use(errorPath);
 //500
 app.use('*', errorhandler);
+
+
+module.exports = {
+    app:app,
+    start:port=> {
+        app.listen(port,()=> {
+            console.log('im listen for the port');
+        });
+    }
+}
