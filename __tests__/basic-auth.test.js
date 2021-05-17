@@ -7,10 +7,10 @@ const server = require('../src/server.js');
 const superTest = require('supertest');
 const serverRequest = superTest(server.app);
 
-describe('test the router for the home page',()=> {
-    it('test the home page',async()=> {
+describe('test the router for the home page', () => {
+    it('test the home page', async() => {
         let response = await serverRequest.get('/');
-        expext(response.status).toEqual(200);
-        expext(response.text).toEqual('im the home page');
+        expect(response.status).toEqual(200);
+        expect(response.text).toEqual('im the home page');
     });
 });
