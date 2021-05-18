@@ -1,26 +1,18 @@
 'use strict';
 
-//initialization and setup the app and package
+//initialization and setup the app and packages
 //dotenv
 require('dotenv').config();
 //mongoose
 const mongoose = require('mongoose');
-//express
-// const express = require('express');
-// const app = express();
-//require the server file
-const server = require('./src/server.js');
-//base the .env file
-//PORT
-const PORT = process.env.PORT || 3030;
-//MONGODB-URL
-const MONGODB_URL = process.env.MONGODB_URL;
-//start the server running
-mongoose.connect(MONGODB_URL, {
+
+// Start up DB Server
+const options = {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
     useCreateIndex: true,
-}).then( server.start(PORT)
-).catch(error =>
-    console.error('Could not start server', error.message));
+    useUnifiedTopology: true,
+};
+mongoose.connect(process.env.MONGODB_URL, options);
+
+// Start the web server
+require('./src/server.js').start(process.env.PORT);

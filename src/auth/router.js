@@ -16,28 +16,23 @@ const router = express.Router();
 
 //router for the sign up page
 // Signup Route -- create a new user
-// Two ways to test this route with httpie
-// echo '{"username":"john","password":"foo"}' | http post :3000/signup
-// http post :3000/signup usernmae=john password=foo
 router.post('/signup', async(request, response) => {
     try {
 
-        req.body.password = await bcrypt.hash(req.body.password, 10);
-        const user = new Users(req.body);
-        const record = await user.save(req.body);
-        res.status(200).json(record);
-    } 
-    catch (e) { res.status(403).send("Error Creating User"); 
+        request.body.password = await bcrypt.hash(request.body.password, 10);
+        const user = new UsersModule(request.body);
+        const record = await user.save(request.body);
+        response.status(200).json(record);
+    } catch (e) {
+        response.status(403).send("Error Creating User");
     }
 });
 
 //router for the sign in page
 // Signin Route -- login with username and password
-// test with httpie
-// http post :3000/signin -a john:foo
-router.post('/signin',basicUser, (request, response) => {
-    let data = req.userdata;
-    res.status(200).json({ user: data });
+router.post('/signin', basicUser, (request, response) => {
+    let data = request.userdata;
+    response.status(200).json({ user: data });
 });
 
 module.exports = router;
