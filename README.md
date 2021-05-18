@@ -32,4 +32,4 @@ a group of similar binary-to-text encoding schemes that represent binary data in
 
 a robust base64 encoder/decoder that is fully compatible written in JavaScript.
 
-![]()
+![](https://github.com/naeemmusamh/basic-auth/blob/main/img/basic-auth.png?raw=true)
