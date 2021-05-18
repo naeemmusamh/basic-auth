@@ -10,7 +10,7 @@ const bcrypt = require('bcrypt');
 //middleware for schema database
 const Users = require('../models/users-model.js');
 
-module.exports = async (request, response, next) => {
+module.exports = async(request, response, next) => {
 
     let basicHeaderParts = req.headers.authorization.split(' '); // ['Basic', 'sdkjdsljd=']
     let encodedString = basicHeaderParts.pop(); // sdkjdsljd=
@@ -18,7 +18,6 @@ module.exports = async (request, response, next) => {
     let [username, password] = decodedString.split(':'); // username, password
 
     try {
-
         const user = await Users.findOne({ username: username })
         const valid = await bcrypt.compare(password, user.password);
         if (valid) {
@@ -26,7 +25,7 @@ module.exports = async (request, response, next) => {
         } else {
             throw new Error('Invalid User')
         }
-    } catch (error) { res.status(403).send("Invalid Login"); 
-
+    } catch (error) {
+        res.status(403).send("Invalid Login");
     }
 };
