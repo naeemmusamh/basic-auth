@@ -7,11 +7,6 @@ const express = require('express');
 const cors = require('cors');
 //express app
 const app = express();
-app.use(cors());
-// Process JSON input and output the data on req.body
-app.use(express.json());
-// Process FORM input and output the data on req.body
-app.use(express.urlencoded({ extended: true }));
 
 //middleware for the error page and router
 //404
@@ -20,6 +15,20 @@ const errorPath = require('./middleware/404.js');
 const errorhandler = require('./middleware/500.js');
 //router page
 const user = require('./auth/router.js');
+
+// Use cors
+app.use(cors());
+// Process JSON input and output the data on req.body
+app.use(express.json());
+// Process FORM input and output the data on req.body
+app.use(express.urlencoded({ extended: true }));
+
+
+// Home Page
+app.get('/', (req, res) => {
+  res.status(200).send('Welcome!');
+});
+
 //route for the router page
 app.use(user);
 
