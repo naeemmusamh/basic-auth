@@ -25,8 +25,12 @@ app.use(express.urlencoded({ extended: true }));
 
 
 // Home Page
-app.get('/', (req, res) => {
-  res.status(200).send('Welcome!');
+app.get('/', (request, response) => {
+    response.status(200).send('Welcome!');
+});
+
+app.get('/wrong-path', (request, response) => {
+    response.status(500).send('there is something wrong in the path');
 });
 
 //route for the router page
