@@ -45,7 +45,7 @@ app.use('*', errorhandler);
 
 //prepare the app for listen for the port
 module.exports = {
-    server: app,
+    app: app,
     start: (port) => {
         app.listen(port, () => {
             console.log(`Server Up on ${port}`);
